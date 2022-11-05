@@ -1,0 +1,3 @@
+CREDITS:
+Hedreon - Arabic Numerals Addon.
+Vanilla Tweaks Team - The original Arabic Numerals.
