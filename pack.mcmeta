@@ -1,6 +1,6 @@
 {
 	"pack": {
 		"pack_format": 9,
-		"description": "This addon changes the numerals from Roman to Arabic Numerals"
+		"description": "This addon changes Minecraft's default Roman numerals to Arabic numerals"
 	}
 }
