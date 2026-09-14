@@ -36,7 +36,7 @@ def custom_input(input_type=None):
             if (
                 input_type == "custom"
                 and len(user_input) <= 10
-                and regex.match("([0-9]+?).([0-9]+?).([0-9]+)", user_input)
+                and regex.match("([0-9]+)\\.([0-9]+?)\\.([0-9]+?)|([0-9]+)\\.([0-9]+?)", user_input)
             ):
                 valid_input = True
             elif input_type == "confirmation" and user_input.lower() in [
