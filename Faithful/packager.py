@@ -136,14 +136,14 @@ def main():
         addon_directories = list_directory(current_directory)
 
         for addon in addon_directories:
-            addon_path = Path(f"{current_directory}\\{addon}")
+            addon_path = current_directory / addon
 
             print(f"├ Add-on found: {addon}")
 
             resolution_directories = list_directory(addon_path)
 
             for index, resolution in enumerate(resolution_directories):
-                resolution_path = Path(f"{addon_path}\\{resolution}")
+                resolution_path = addon_path / resolution
 
                 resolution_message = f"Resolution found: {resolution}"
                 files_message = (
@@ -171,12 +171,12 @@ def main():
             print("\nPackaging add-ons...\n")
 
             for addon_directory in addon_directories:
-                addon_path = Path(f"{current_directory}\\{addon_directory}")
+                addon_path = current_directory / addon_directory
 
                 resolution_directories = list_directory(addon_path)
 
                 for resolution_directory in resolution_directories:
-                    resolution_path = Path(f"{addon_path}\\{resolution_directory}")
+                    resolution_path = addon_path / resolution_directory
 
                     filtered_files = filter_directory(resolution_path)
 
@@ -184,8 +184,10 @@ def main():
                         f"{addon_directory}_{resolution_directory}_{version_input}.zip"
                     )
 
+                    package_path = current_directory / package_name
+
                     with ZipFile(
-                        package_name, "w", ZIP_DEFLATED, strict_timestamps=False
+                        package_path, "w", ZIP_DEFLATED, strict_timestamps=False
                     ) as new_package:
                         for file in filtered_files:
                             archive_name = file.relative_to(resolution_path)
