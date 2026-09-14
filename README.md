@@ -1,4 +1,4 @@
-# Addons
+# Add-ons
 
 All of my various add-ons.
 
