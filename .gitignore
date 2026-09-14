@@ -203,3 +203,7 @@ __marimo__/
 *.msm
 *.msp
 *.txz
+
+# Script-generated folders
+packaged_files/
+downloaded_files/

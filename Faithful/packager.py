@@ -36,7 +36,9 @@ def custom_input(input_type=None):
             if (
                 input_type == "custom"
                 and len(user_input) <= 10
-                and regex.match("([0-9]+)\\.([0-9]+?)\\.([0-9]+?)|([0-9]+)\\.([0-9]+?)", user_input)
+                and regex.match(
+                    "([0-9]+)\\.([0-9]+?)\\.([0-9]+?)|([0-9]+)\\.([0-9]+?)", user_input
+                )
             ):
                 valid_input = True
             elif input_type == "confirmation" and user_input.lower() in [
@@ -131,6 +133,7 @@ def filter_directory(directory):
 
 def main():
     current_directory = Path(__file__).parent
+    parent_directory = current_directory.parent
 
     if any(current_directory.iterdir()):
         addon_directories = list_directory(current_directory)
@@ -168,6 +171,9 @@ def main():
         )
 
         if valid_version:
+            packaged_directory = parent_directory / "packaged_files"
+            packaged_directory.mkdir(exist_ok=True)
+
             print("\nPackaging add-ons...\n")
 
             for addon_directory in addon_directories:
@@ -184,7 +190,11 @@ def main():
                         f"{addon_directory}_{resolution_directory}_{version_input}.zip"
                     )
 
-                    package_path = current_directory / package_name
+                    package_path = packaged_directory / package_name
+
+                    relative_path = Path("..") / package_path.relative_to(
+                        parent_directory
+                    )
 
                     with ZipFile(
                         package_path, "w", ZIP_DEFLATED, strict_timestamps=False
@@ -193,7 +203,7 @@ def main():
                             archive_name = file.relative_to(resolution_path)
 
                             new_package.write(file, archive_name, ZIP_DEFLATED)
-                    print(f"Packaged {package_name}!")
+                    print(f"Packaged '{relative_path}'")
     else:
         print("No add-ons found!")
     input("\nPress any key to exit...")
